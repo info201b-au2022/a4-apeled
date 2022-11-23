@@ -1,45 +1,63 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
-date: '2022-11-01'
-output: html_document
+title: 'Incarceration Disparities in the United States'
+author: "Amit Peled"
+date: "2022-11-20"
+output:
+  html_document: default
+  pdf_document: default
 ---
+
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE}
 source("../source/a4-helpers.R")
 source("../source/analysis.R")
 ```
 
+
 ## Abstract 
-[TODO: Include a short abstract (about 50 words)]
-
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
-
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-of numbers: `r test_query2(num)`.
-
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
-
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
-```
+This report dissects some of the disparities present in the jail statistics within the United States. Data from the past 50 years is analyzed and presented in the form of visualizations that aim to shine light on inequalities present. 
 
 ## Introduction 
-[TODO]
+This assignment aims at analyzing some of the inequalities present within the incarceration trends in the United States. The dataset analyzed over the course of this assignment contains data about county level prisons. Changes in incarceration and related behavior across the United States over time are enabled for assessment as a result of the data provided in the data set. By analyzing and interpreting that data provided, multiple stakeholders may be able to use and receive impact from the results. Direct stakeholders such as politicians or law enforcers may use this information to actively change the laws that govern our society today, so that less inequality may be present in our future. Indirect stakeholders will hold benefit from the actions of the alterations in guidelines that have led to disparities in the incarceration rates in the United States.
+This report will provide summary information on the data set analyzed and answer the following prompts with a multitude of visualizations; the Growth of the U.S. Prison Population, the Growth of Prison Population by State, the Growth of Prison Population for Different Genders by Urbanicity, and the Jail Population Ratio (Male to Female) in the Mainland United States. 
 
 ## Data Summary 
-[TODO]
+```{r, echo=FALSE}
+summary_info <- get_summary_list()
+```
+Over the past 50 years in the United States there have been a vast number of incarcerations. The total number rose rapidly, peaking in `r summary_info$max_imprison_year`, with a staggering `r format(summary_info$max_imprison_pop, scientific=FALSE)` citizens held in prisons. **`r summary_info$max_imprison_state`** since 1970 and as of 2018 is responsible for the most incarcerations. `r summary_info$max_imprison_state` has incarnated `r format(summary_info$max_imprison_pop_state, scientific=FALSE)` citizens which is `r summary_info$total_pop_comp`% of their cumulative population. The rest of this report will dive into possible inequalities that can be discovered using this data set. 
 
-[TODO ... other sections ... See Canvas for details]
 
-_All the very best with your work!_
 
+## Section 3: Growth of the U.S. Prison Population
+```{r, echo=FALSE}
+print(plot_jail_pop_for_us())
+```
+
+This plot portrays the change in jail populations within the United States between 1970 and 2018. The chart suggests that there was a somewhat constant increase of jail populations in the United States from around 1979 to 2008, reaching its peak in 2008. After this period, the jail population seemed to plateau and slightly decrease. What may have caused for the decline of the jail population after its peak in 2008?
+
+
+## Section 4: Growth of Prison Population by State 
+```{r, echo=FALSE}
+states <- c("WA", "CA", "NY", "AL")
+print(plot_jail_pop_by_states(states))
+```
+
+This plot portrays the change in jail populations for `r states` between 1970 and 2018. The chart suggests that the jail populations for each state compared has similar periods of rise and decline of population with respect to years. Some states experience a more dramatic increase or decrease, which indicates whether the states total population relates to the slopes of each line presented in the data?
+
+## Section 5: Growth of Prision Population for Different Genders by Urbanicity
+```{r, echo=FALSE}
+print(plot_jail_pop_by_gender())
+```
+
+This plot aims to provide information on how have the jail populations in different urbanicities for different genders changed over time? This figure consists of 8 different charts, essentially divided into to sets of plots for males and females for the different urbanicities. In order to attain a constant of measure, the jail populations were mutated to provide a value of jailed citizens per 10,000 citizens. In doing such mutation, the data among the different urbanicities is made comparable with one another. It can be observed by the axii of the plots that males hold larger quantities of jailed citizens as compared to their similar urbanicity female counterparts. However, the trends that both genders experience is relatively the same, as the plot suggests that there have been a rapid increase in jailed citizens within small/mid urbanicities for both males and females. While the trends may be the same, the scale of the graphs draw to inequality present in the jailed rates for each gender, and suggests that more analysis should be done to determine why the large disparity exists. 
+
+## Section 6: Jail Population Ratio (Male to Female) in the Mainland United States
+```{r, echo=FALSE}
+print(plot_jail_pop_by_gender_map())
+```
+
+This plot aims to provide information on how the jail population between males in females compare in different US states in 2018? This map uses a color scheme to show the ratio of imprisoned males to females in the Main Land United States. The map suggests that eastern states hold a higher ratio value, indicating that factors of inequality may be present at these locations that result in this disparity. Additional analysis is required to dissect such claims, but the map does suggest that something exists.
